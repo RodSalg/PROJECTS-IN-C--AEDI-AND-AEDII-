@@ -3,6 +3,8 @@
 #include <math.h>
 #include "tadP.h"
 
+
+
 int main(){
 
     printf("=)\n");
@@ -60,7 +62,6 @@ int main(){
 }
 
 /* caso teste: 
-
 ENTRADA
 -3 4 3
 4 -8 -9
@@ -71,4 +72,19 @@ SAÍDA
 -3 4 3
 4 -8 -9
 2 -3 -5
-6.71  /*
+6.71
+
+Sugestão do Luca: 
+
+deixar os scanf mais clean através da seguinte função:
+
+    void scan_geral(float *x, float *y, float *z){
+
+        scanf("%f", x);
+        scanf("%f", y);
+        scanf("%f", z); 
+    }
+
+
+
+ */
