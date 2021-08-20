@@ -28,6 +28,11 @@ int main () {
         printf("%.2f\n", d);
         scanf("%f %f %f", &x1, &y1, &z1);
     }
+
+    libera(p1);
+    libera(p2);
+
+    //end
 }
 
 
