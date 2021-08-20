@@ -1,52 +1,55 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <stdlib.h>   /* malloc, free, exit */
+#include <stdio.h>    /* printf */
+#include <math.h>     /* sqrt */
 #include "tadP.h"
 
+struct ponto {
+  float x;
+  float y;
+  float z;
+};
 
-Ponto *cria(){
-    Ponto *p = (Ponto*)malloc(sizeof(Ponto));
 
+Ponto* cria (float x, float y, float z){
 
-    return p;
+  Ponto* p = (Ponto*) malloc(sizeof(Ponto));
+  if (p == NULL){
+    printf("Sem memória suficiente!\n");
+    exit(1);
+  }
+  p->x = x;
+  p->y = y;
+  p->z = z;
+
+  return p;
 }
 
-void acessa(Ponto *p, float *x, float *y, float *z){
 
-    *x = p->x;
-    *y = p->y;
-    *z = p->z;
+void acessa (Ponto* p, float* x, float* y, float *z) {
+
+  *x = p->x;
+  *y = p->y;
+  *z = p->z;
 }
 
-void atribui(Ponto *p, float x, float y, float z){
 
-    p->x = x;
-    p->y = y;
-    p->z = z;
+void atribui (Ponto* p, float x, float y, float z){
 
+  p->x = x;
+  p->y = y;
+  p->z= z;
 }
 
-float distancia(Ponto *p1, Ponto *p2){
+float distancia (Ponto* p1, Ponto* p2){
 
-    float dx;
-    float dy;
-    float dz;
-    float total;
+  float dx = p2->x - p1->x;
+  float dy = p2->y - p1->y;
+  float dz = p2->z - p1->z;
 
-    dx = p2->x - p1->x;
-    dy = p2->y - p1->y;
-    dz = p2->z - p1->z;
-    
-
-    total = sqrt((dx * dx) + (dy * dy) + (dz * dz));
-
-    return total;
+  return sqrt(dx*dx + dy*dy + dz*dz);
 }
 
-void imprime(Ponto *ponto){
+void libera (Ponto* p) {
 
-    printf("%.2f ", ponto->x);
-    printf("%.2f ", ponto->y);
-    printf("%.2f\n", ponto->z);
+  free(p);
 }
-

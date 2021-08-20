@@ -1,65 +1,35 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "tadP.h"
 
 
+int main () {
 
-int main(){
+  Ponto *p1, *p2;
+  float d;
+  float x, y, z; //estou usando para guardar os dados do ponto 1 que sera alterado;
+  float x1, y1, z1; //usarei para scanf dos dados do ponto 1;
+  float x2, y2, z2; //usarei para scanf dos dados do ponto 2;
 
-    printf("=)\n");
-    float x;
-    float y;
-    float z;
-    float x2;
-    float y2;
-    float z2;
+  scanf("%f %f %f", &x1, &y1, &z1);
+ 
+    while(x1 != 0 && y1!= 0 & z1 != 0){
+        p1 = cria(x1, y1, z1);
+        acessa(p1, &x, &y, &z); //aqui guardo informações do meu primeiro ponto 1;
 
-    Ponto *ponto1 = cria();
-    Ponto *ponto2 = cria();
+        //novas informações para o novo ponto1;
+        scanf("%f %f %f", &x1, &y1, &z1);
+        atribui(p1, x1, y1, z1);
 
-    //primeira variavel
-    scanf("%f", &x);
-    scanf("%f", &y);
-    scanf("%f", &z);  
-    
-    while( x != 0 && y!= 0 & z != 0){
+        //introduzindo o ponto2;
+        scanf("%f %f %f", &x2, &y2, &z2); 
+        p2 = cria (x2, y2, z2);
 
-        atribui(ponto1, x, y, z);
-        //segunda variavel
-        scanf("%f", &x2);
-        scanf("%f", &y2);
-        scanf("%f", &z2);
-        atribui(ponto1, x2, y2 , z2);
-    
-        //terceira variavel 
-        scanf("%f", &x2);
-        scanf("%f", &y2);
-        scanf("%f", &z2);
-        atribui(ponto2, x2, y2, z2);
-
-        //impressão dos
-        printf("%.2f %.2f %.2f\n", x, y, z);
-        imprime(ponto1);
-        imprime(ponto2);
-
-
-        float total = distancia(ponto1, ponto2);
-        printf("%.2f\n", total);
-        
-
-        //primeira variavel
-        scanf("%f", &x);
-        scanf("%f", &y);
-        scanf("%f", &z);
-
-        //printf("\n\n\n looping \n\n\n\n");
-
-
+        d = distancia (p1, p2);
+        printf("%.2f\n", d);
+        scanf("%f %f %f", &x1, &y1, &z1);
     }
-
-    return 0;
 }
+
 
 /* caso teste: 
 ENTRADA
