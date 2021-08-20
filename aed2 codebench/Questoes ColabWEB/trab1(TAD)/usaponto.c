@@ -24,9 +24,9 @@ int main () {
         scanf("%f %f %f", &x2, &y2, &z2); 
         p2 = cria (x2, y2, z2);
 
-        printf("%.2f %.2f %.2f\n", x, y, z);
-        printf("%.2f %.2f %.2f\n", x1, y1, z1);
-        printf("%.2f %.2f %.2f\n", x2, y2, z2);
+        printf("%.0f %.0f %.0f\n", x, y, z);
+        printf("%.0f %.0f %.0f\n", x1, y1, z1);
+        printf("%.0f %.0f %.0f\n", x2, y2, z2);
        
 
         d = distancia (p1, p2);
