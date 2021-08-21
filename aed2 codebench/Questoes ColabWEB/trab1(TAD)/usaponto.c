@@ -28,11 +28,13 @@ int main () {
         printf("%.0f %.0f %.0f\n", x1, y1, z1);
         printf("%.0f %.0f %.0f\n", x2, y2, z2);
        
-
+        scanf("%f %f %f", &x1, &y1, &z1);
         d = distancia (p1, p2);
         printf("%.2f\n", d);
-        scanf("%f %f %f", &x1, &y1, &z1);
     }
+
+    
+
 
     libera(p1);
     libera(p2);
