@@ -6,6 +6,7 @@ void funcao(int a, int b);
 void repete(int a, int b);
 bool verifica_positivo(int a, int b);
 
+
 bool zero(int x){
     if(x == 0 ){
         return true;
@@ -22,7 +23,7 @@ int decr(int x){
     return x - 1;
 }
 
-bool menor(int x, int y){
+bool diferente(int x, int y){
 
     if(zero(x)){
         if(zero(y)){
@@ -30,17 +31,17 @@ bool menor(int x, int y){
         }
         return true; //significa que o x alcançou zero primeiro
     }else if( zero(y)){
-      return false;
+      return true;
       }else{
         x = decr(x);
         y = decr(y);
 
-        return menor(x,y);
+        return diferente(x,y);
     }   
 }
 
 void funcao(int a, int b){
-    if(menor(a, b)){
+    if(diferente(a, b)){
             printf("SIM\n");
             scanf("%d", &a);
             scanf("%d", &b);
@@ -52,10 +53,10 @@ void funcao(int a, int b){
          
         }
 	
-			if(verifica_positivo(a, b)){
+	
+        if(verifica_positivo(a, b)){
 				 repete(a, b);	
 			}
-            
 }
 
 void repete(int a, int b){
@@ -78,12 +79,12 @@ int main(){
 
     int a;
     int b;
-	scanf("%d", &a);
-	scanf("%d", &b);
-	if(verifica_positivo(a,b)){		
+
+    scanf("%d", &a);
+    scanf("%d", &b);
+
+    if(verifica_positivo(a,b)){		
 		repete(a, b);	
 	}
-
-
     
 }
