@@ -4,7 +4,7 @@
 
 void funcao(int a);
 void repete(int a);
-bool verifica_sinal(int a);
+
 
 
 bool zero(int x){
@@ -66,13 +66,7 @@ void repete(int a){
     }
 }
 
-bool verifica_sinal(int a){
-    if( a < 0){
-        return true;
-    }
 
-    return false;
-}
 
 int main(){
 
