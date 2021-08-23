@@ -23,14 +23,15 @@ int main () {
         //introduzindo o ponto2;
         scanf("%f %f %f", &x2, &y2, &z2); 
         p2 = cria (x2, y2, z2);
-
+        printf("\n");
         printf("%.0f %.0f %.0f\n", x, y, z);
         printf("%.0f %.0f %.0f\n", x1, y1, z1);
         printf("%.0f %.0f %.0f\n", x2, y2, z2);
-       
-        scanf("%f %f %f", &x1, &y1, &z1);
+
         d = distancia (p1, p2);
         printf("%.2f\n", d);
+        scanf("%f %f %f", &x1, &y1, &z1);
+        
     }
 
     
@@ -45,9 +46,6 @@ int main () {
 
 /* caso teste: 
 ENTRADA
--3 4 3
-4 -8 -9
-2 -3 -5
 -3 4 3
 4 -8 -9
 2 -3 -5
