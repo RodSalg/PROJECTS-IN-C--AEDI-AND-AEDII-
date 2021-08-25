@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 
 int soma(int x, int b,int cont);
 
@@ -35,6 +36,7 @@ int decr(int x){
 char *transforma_minusculo(char palavra[], int tam, int aux){ //percorre o meu vetor
 
     if(tam == 0){
+        palavra[aux] = tolower(palavra[aux]);
         return palavra;
     }else{
         tam = decr(tam);
@@ -49,29 +51,18 @@ char *transforma_minusculo(char palavra[], int tam, int aux){ //percorre o meu v
 
 void palindromo(char palavra[], int tam, int aux){ //percorre o meu vetor
 
-    printf("%c e %c\n", palavra[aux], palavra[tam]);
-    printf("aux: %d\n", aux);
-    printf("tam: %d\n", tam);
-    printf("ESTOU BUGANDO\n");
 
     if(tam <= tam/2){
         printf("sim");
     }else{ 
         //coloque sua operação aqui
         if(palavra[aux] == palavra[tam] ){
-            printf("entrei aqui\n");
-            printf("aux: %d\n", aux);
-            printf("tam: %d\n", tam);
             aux = incr(aux);
             tam = decr(tam);             
             return palindromo(palavra, tam, aux);
         }else{
-            tam = 0;
             printf("nao");
-            return palindromo(palavra, tam, aux);
         }
-
-        printf("ESTOU BUGANDO\n");
         
     }
 }
@@ -87,7 +78,7 @@ int main(){
     tam = strlen(word); //tamanho da minha palavra
     tam = tam -1;
     transforma_minusculo(word, tam, aux);
-    //printf("%s", word);
+    //printf("%s ", word);
 
     palindromo(word, tam, aux);
     
