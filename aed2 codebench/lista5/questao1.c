@@ -5,8 +5,8 @@
 typedef struct tipoNo tipoNo;
 typedef struct tipoAgenda{
     
-    char nome[15];
-    char endereco[20];
+    char nome[81];
+    char endereco[81];
     float numero; //altura
 
 }tipoAgenda;
@@ -134,23 +134,30 @@ int main(){
 
     lista = criarLista();
 
-    scanf("%s", &a.nome);
+    scanf("%[^\n]%*c", a.nome);
+    compara = strcmp(teste, a.nome);
+    int flag = 0;
 
     while(compara != 0){
 
-        lestring(a.endereco, 20);
+        scanf("%[^\n]%*c", a.endereco);
         scanf("%f", &a.numero);
 
         inserirFinalLista(lista, a);
-        scanf("%s", &a.nome);
+
+        scanf("%[^\n]%*c", a.nome);
         compara = strcmp(teste, a.nome);
-    }         
+        flag = 1;
+    }
 
 
-
+    mostrarLista(lista);
     printf("\n\n");
     
-    media(*lista);
+    if(flag == 1){
+        media(*lista);
+    }
+    
 
 
 
