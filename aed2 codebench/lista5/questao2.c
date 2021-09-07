@@ -5,9 +5,7 @@
 typedef struct tipoNo tipoNo;
 typedef struct tipoAgenda{
     
-    char nome[15];
-    char endereco[20];
-    float numero; //altura
+    int numero;
 
 }tipoAgenda;
 
@@ -33,7 +31,7 @@ tipoLista* criarLista(){
 }
 
 void mostrarInfo(tipoAgenda a){
-    printf("nome: %s, endereco: %s, idade: %.2f\n", a.nome, a.endereco, a.numero);
+    printf("num: %d\n", a.numero);
 }
 
 void inserirLista(tipoLista *l, tipoAgenda a){
@@ -78,44 +76,32 @@ void mostrarLista(tipoLista *l){//com ponteiro{
 }
 
 
-void media(tipoLista l){
-    
-    int cont = 0;
-    float acumulador;
-    while(l.prim){
+int comum(tipoLista l, tipoLista l2){
+    printf("entrei na funcao\n");
+    tipoLista aux;
+    aux = l2;
+    while(l.prim){  //posicao 0
+        l2 = aux;
+    printf("entrei no 1 while\n");
 
-        acumulador = acumulador + l.prim->info.numero;
-        cont = cont + 1;
+        while(l2.prim){
+            printf("entrei no 2 while\n");
+            
+            if(l.prim->info.numero == l2.prim->info.numero){
+                printf("\ncomparando [%d] com [%d]\n", l.prim->info.numero, l2.prim->info.numero);
+                return 1;
+            }
+
+            printf("\n [%d] e  [%d] nao sao iguais\n", l.prim->info.numero, l2.prim->info.numero);
+
+            l2.prim = l2.prim->prox;
+        }
+        
         l.prim = l.prim->prox;
     }
 
-    float media;
-    media = acumulador/cont;
-    printf("%.2f", media);
-}
+    return 0;
 
-int lestring(char s[], int max)
-{
-    int i = 0;
-    char letra;
-
-    for (i = 0; i < (max - 1); i++) {
-   letra = fgetc(stdin);
-
- 
-   if ((letra == '\n') && (i == 0)) {
-       i = i - 1;
-       continue;
-   }
-
-
-   if (letra == '\n')
-       break;
-   s[i] = letra;
-    }
-    s[i] = 0;
-
-    return (i);
 }
 
 
@@ -124,33 +110,41 @@ int main(){
 
     
     tipoLista *lista;
+    tipoLista *lista2;
     tipoAgenda a;
-    int tam;
-    
-
-    char teste[4] = "XXX";
-    int compara;
-    compara = strcmp(teste, a.nome);
-
     lista = criarLista();
+    lista2 = criarLista();
 
-    scanf("%s", &a.nome);
 
-    while(compara != 0){
-
-        lestring(a.endereco, 20);
-        scanf("%f", &a.numero);
+    scanf("%d", &a.numero);
+    while(a.numero != 0){
 
         inserirFinalLista(lista, a);
-        scanf("%s", &a.nome);
-        compara = strcmp(teste, a.nome);
-    }         
+        scanf("%d", &a.numero);
+    }
 
 
+    scanf("%d", &a.numero);
+    while(a.numero != 0){
 
-    printf("\n\n");
+        inserirFinalLista(lista2, a);
+        scanf("%d", &a.numero);
+    }          
+
+    mostrarLista(lista);
+    printf("\n");
+    mostrarLista(lista2);
+    printf("\n");
+
+    if( comum(*lista, *lista2) == 0){
+        printf("NAO");
+    }else{
+        printf("SIM");
+    }
+        
     
-    media(*lista);
+    
+
 
 
 
