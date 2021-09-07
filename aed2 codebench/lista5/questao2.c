@@ -77,22 +77,22 @@ void mostrarLista(tipoLista *l){//com ponteiro{
 
 
 int comum(tipoLista l, tipoLista l2){
-    printf("entrei na funcao\n");
+    //printf("entrei na funcao\n");
     tipoLista aux;
     aux = l2;
     while(l.prim){  //posicao 0
         l2 = aux;
-    printf("entrei no 1 while\n");
+    //printf("entrei no 1 while\n");
 
         while(l2.prim){
-            printf("entrei no 2 while\n");
+            //printf("entrei no 2 while\n");
             
             if(l.prim->info.numero == l2.prim->info.numero){
-                printf("\ncomparando [%d] com [%d]\n", l.prim->info.numero, l2.prim->info.numero);
+                //printf("\ncomparando [%d] com [%d]\n", l.prim->info.numero, l2.prim->info.numero);
                 return 1;
             }
 
-            printf("\n [%d] e  [%d] nao sao iguais\n", l.prim->info.numero, l2.prim->info.numero);
+            //printf("\n [%d] e  [%d] nao sao iguais\n", l.prim->info.numero, l2.prim->info.numero);
 
             l2.prim = l2.prim->prox;
         }
@@ -131,10 +131,10 @@ int main(){
         scanf("%d", &a.numero);
     }          
 
-    mostrarLista(lista);
-    printf("\n");
-    mostrarLista(lista2);
-    printf("\n");
+    //mostrarLista(lista);
+    //printf("\n");
+    //mostrarLista(lista2);
+    //printf("\n");
 
     if( comum(*lista, *lista2) == 0){
         printf("NAO");
