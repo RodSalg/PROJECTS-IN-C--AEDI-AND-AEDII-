@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+//structs
+
 typedef struct no{
     float valor;
     struct no *proximo;
 }No;
 
-No* empilhar(No *pilha, float num){
+//funcoes da pilha
+
+No* push(No *pilha, float num){
     No *novo = malloc(sizeof(No));
 
     if(novo){
@@ -16,11 +20,11 @@ No* empilhar(No *pilha, float num){
         return novo;
     }
     else
-        printf("\tErro ao alocar memoria!\n");
+        printf("no enought memory! ");
     return NULL;
 }
 
-No* desempilhar(No **pilha){
+No* pop(No **pilha){
     No *remover = NULL;
 
     if(*pilha){
@@ -28,13 +32,15 @@ No* desempilhar(No **pilha){
         *pilha = remover->proximo;
     }
     else
-        printf("\tPilha vazia\n");
+        printf("*");
     return remover;
 }
 
-float operacao(float a, float b, char x){
+//funcoes para funcao
+
+float operacao(float a, float b, char x){ //identifica as operacoes
     switch(x){
-    case '+':
+    case '#':
         return a + b;
         break;
     case '-':
@@ -46,7 +52,7 @@ float operacao(float a, float b, char x){
     case '*':
         return a * b;
         break;
-    default:
+    default: //caso padrao caso retorne nada
         return 0.0;
     }
 }
@@ -56,33 +62,39 @@ float resolver_expressao(char x[]){
     float num;
     No *n1, *n2, *pilha = NULL;
 
-    pt = strtok(x, " ");
+    pt = strtok(x, " "); // quebrar a string
     while(pt){
-        if(pt[0] == '+' || pt[0] == '-' || pt[0] == '/' || pt[0] == '*'){
-            n1 = desempilhar(&pilha);
-            n2 = desempilhar(&pilha);
+        if(pt[0] == '#' || pt[0] == '-' || pt[0] == '/' || pt[0] == '*'){
+			  
+            n1 = pop(&pilha);
+            n2 = pop(&pilha);
             num = operacao(n2->valor, n1->valor, pt[0]);
-            pilha = empilhar(pilha, num);
+            pilha = push(pilha, num);
             free(n1);
             free(n2);
         }
         else{
-            num = strtol(pt, NULL, 10);
-            pilha = empilhar(pilha, num);
+            num = strtol(pt, NULL, 10); //converter para numero
+            pilha = push(pilha, num); //adicionar novamente na pilha o numero
         }
         pt = strtok(NULL, " ");
     }
-    n1 = desempilhar(&pilha);
+    n1 = pop(&pilha);
     num = n1->valor;
     free(n1);
     return num;
 }
 
 int main(){
-    //char exp[50] = {"5 3 2 4 6 7 1 + * + * + *"};
-    char exp[50];
-    scanf("%[^\n]%*c", exp);
 
-    printf("Resultado de %s:\t", exp);
-    printf("%f\n", resolver_expressao(exp));
+    char expressao[100];
+    int tam;
+    scanf("%d", &tam);
+
+    for(int i = 0; i < tam; i++){
+        
+        scanf("%[^'.']%*c", expressao);
+        printf("%.2f\n", resolver_expressao(expressao));
+    }
+    
 }
