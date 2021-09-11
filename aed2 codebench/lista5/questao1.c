@@ -125,8 +125,7 @@ int main(){
     
     tipoLista *lista;
     tipoAgenda a;
-    int tam;
-    
+    int tam;  
 
     char teste[4] = "XXX";
     int compara;
