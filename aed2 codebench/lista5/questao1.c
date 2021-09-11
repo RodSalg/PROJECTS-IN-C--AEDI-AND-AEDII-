@@ -82,6 +82,14 @@ void media(tipoLista l){
     
     int cont = 0;
     float acumulador;
+    float media;
+
+    if(l.prim == NULL){
+        media = 0;
+        printf("%.2f", media);
+        exit(1);
+    }
+
     while(l.prim){
 
         acumulador = acumulador + l.prim->info.numero;
@@ -89,7 +97,6 @@ void media(tipoLista l){
         l.prim = l.prim->prox;
     }
 
-    float media;
     media = acumulador/cont;
     printf("%.2f", media);
 }
@@ -125,38 +132,29 @@ int main(){
     
     tipoLista *lista;
     tipoAgenda a;
-    int tam;  
+    int tam;
+    
 
     char teste[4] = "XXX";
     int compara;
-    compara = strcmp(teste, a.nome);
+    
 
     lista = criarLista();
 
     scanf("%[^\n]%*c", a.nome);
     compara = strcmp(teste, a.nome);
-    int flag = 0;
 
-    while(compara != 0){
+    while(compara != 0){    
 
         scanf("%[^\n]%*c", a.endereco);
         scanf("%f", &a.numero);
 
         inserirFinalLista(lista, a);
-
         scanf("%[^\n]%*c", a.nome);
         compara = strcmp(teste, a.nome);
-        flag = 1;
-    }
+    }         
 
-
-    mostrarLista(lista);
-    printf("\n\n");
-    
-    if(flag == 1){
-        media(*lista);
-    }
-    
+    media(*lista);
 
 
 
