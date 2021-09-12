@@ -78,17 +78,60 @@ void mostrarLista(tipoLista l){ //sem ponteiro
     }
 }
 
-void mostraListaInvertida(tipoLista *l, tipoNo *aux){
-    
-    if(aux->ant == NULL){
-        mostrarInfo(aux->info); 
-    }else{
+tipoAluno removerLista(tipoLista *l){ //retira o primeiro   
 
-        mostrarInfo(aux->info);
-        aux = aux->ant;
-        mostraListaInvertida(l, aux);
-    }
+    tipoNo *aux;
+    tipoAluno dado;
+
+    aux = l->prim;
+    l->prim = l->prim->prox;
+    dado = aux->info;
+
+    free(aux);
+
+    return dado;
 }
+
+
+
+
+
+void jogo(tipoLista *lista){
+    
+    tipoLista *descartados;
+    descartados = criarLista();
+    
+    int tras;
+    int desc;
+    tipoAluno a;
+    tipoAluno b;
+    while(lista->prim != lista->ult){
+        desc = lista->prim->info.numero;
+        b.numero = desc;
+        removerLista(lista);
+        inserirFinalLista(descartados, b);
+
+        tras = lista->prim->info.numero;
+        a.numero = tras;
+        removerLista(lista);
+        inserirFinalLista(lista, a);
+        printf("\n");
+        
+
+    }
+    printf("restou: ");
+    mostrarLista(*lista);
+
+    printf("descartadas: ");
+    mostrarLista(*descartados);
+
+
+}
+
+
+
+
+
 
 
 int main(){
@@ -98,19 +141,14 @@ int main(){
     tipoAluno a;
     
     lista = criarLista();
-
-    scanf("%d", &a.numero);
- 
-    if(a.numero != 0){
-        while(a.numero != 0){    
-
+    int tam;
+    scanf("%d", &tam);
+    for(int i = 1; i <= 3; i++){
+        a.numero = i;
         inserirFinalLista(lista, a);
-        scanf("%d", &a.numero);
-        }
-
-        tipoNo *aux = lista->ult;
-        mostraListaInvertida(lista, aux);
     }
+
+    jogo(lista);
 
     
 
