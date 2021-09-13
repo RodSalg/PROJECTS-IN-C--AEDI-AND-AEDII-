@@ -32,7 +32,7 @@ tipoLista* criarLista(){
 }
 
 void mostrarInfo(tipoAluno a){
-    printf("%d ",a.numero);
+    printf("%d, ", a.numero);
 }
 
 void inserirLista(tipoLista *l, tipoAluno a){
@@ -72,10 +72,13 @@ void inserirFinalLista(tipoLista *l, tipoAluno a){
 
 void mostrarLista(tipoLista l){ //sem ponteiro
     
-    while(l.prim){
+    while(l.prim->prox != NULL){
         mostrarInfo(l.prim->info);
         l.prim = l.prim->prox;
     }
+
+    printf("%d ", l.prim->info.numero);
+
 }
 
 tipoAluno removerLista(tipoLista *l){ //retira o primeiro   
@@ -105,6 +108,8 @@ void jogo(tipoLista *lista){
     int desc;
     tipoAluno a;
     tipoAluno b;
+    //printf("\antes de entrar no while: ");
+    //mostrarLista(*lista);
     while(lista->prim != lista->ult){
         desc = lista->prim->info.numero;
         b.numero = desc;
@@ -114,17 +119,17 @@ void jogo(tipoLista *lista){
         tras = lista->prim->info.numero;
         a.numero = tras;
         removerLista(lista);
-        inserirFinalLista(lista, a);
-        printf("\n");
-        
+        inserirFinalLista(lista, a); 
 
     }
-    printf("restou: ");
-    mostrarLista(*lista);
 
-    printf("descartadas: ");
+    printf("Descartadas: ");
     mostrarLista(*descartados);
+    printf("\nRestou: ");
+    mostrarLista(*lista);
+    printf("\n");
 
+    removerLista(lista);
 
 }
 
@@ -143,15 +148,29 @@ int main(){
     lista = criarLista();
     int tam;
     scanf("%d", &tam);
-    for(int i = 1; i <= 3; i++){
-        a.numero = i;
-        inserirFinalLista(lista, a);
+
+    while(tam != 0){
+
+        if(tam == 1){
+        printf("Descartadas: ");
+        printf("\nRestou: 1");
+        printf("\n");
+        }else{
+            for(int i = 1; i <= tam; i++){
+            a.numero = i;
+            inserirFinalLista(lista, a);
+        }
+
+        jogo(lista);
+
+        }
+        scanf("%d", &tam);
+
     }
 
-    jogo(lista);
+    free(lista);
 
     
-
-
     return 0;
 }
+ 

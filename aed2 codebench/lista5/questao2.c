@@ -1,22 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 typedef struct tipoNo tipoNo;
-typedef struct tipoAgenda{
-    
+typedef struct tipoDado{
+
+    char nome[80];
     int numero;
 
-}tipoAgenda;
+}tipoDado;
 
 typedef struct tipoNo{
-    tipoAgenda info;
+    tipoDado info;
     tipoNo *prox;
+
 }tipoNo;
 
 
 typedef struct tipoLista{
-    tipoNo* prim;
+    tipoNo* atual;
 
 }tipoLista;
 
@@ -24,133 +25,174 @@ typedef struct tipoLista{
 tipoLista* criarLista(){
     tipoLista *l;
     l = malloc(sizeof(tipoLista));
-    l->prim = NULL;
+    l->atual = NULL;
 
     return l;
 
 }
 
-void mostrarInfo(tipoAgenda a){
-    printf("num: %d\n", a.numero);
+void mostrarInfo(tipoDado a){
+    printf("%s %d \n",a.nome, a.numero);
 }
 
-void inserirLista(tipoLista *l, tipoAgenda a){
+void inserirLista(tipoLista *l, tipoDado a){ //insere no inicio da lista
     tipoNo* no;
     no = (tipoNo*)malloc(sizeof(tipoNo));
     no->info = a;
-    no->prox = l->prim;
-    l->prim = no;
 
-}
+    if(l->atual){
 
-void inserirFinalLista(tipoLista *l, tipoAgenda a){
+        no->prox = l->atual->prox; 
 
-    tipoNo* no;
-    no = (tipoNo*)malloc(sizeof(tipoNo));
-    no->info = a;
-    no->prox = NULL;
-
-    if(l->prim == NULL){
-        l->prim = no;
     }else{
-        tipoNo *aux = l->prim;
-        while(aux->prox != NULL){
+
+        l->atual = no;
+    }
+    l->atual->prox = no;
+
+}
+
+void mostrarLista(tipoLista *l){
+    tipoNo *aux;
+    if(l->atual){
+        aux = l->atual;
+        do{
+            mostrarInfo(aux->info);
             aux = aux->prox;
-        }
-        aux->prox = no;
-
+        }while(aux != l->atual);
     }
 
+}
+
+int removerLista(tipoLista *l, int chave){
+    tipoNo *aux, *ant;
     
+    if(l->atual){
+        aux = l->atual;
+        do{
+            ant = aux;
+            aux = aux->prox;
 
-}
-
-
-
-void mostrarLista(tipoLista *l){//com ponteiro{
-    tipoNo *aux = l->prim;
-    while(aux){
-        mostrarInfo(aux->info);
-        aux = aux->prox;
-    }
-}
-
-
-int comum(tipoLista l, tipoLista l2){
-    //printf("entrei na funcao\n");
-    tipoLista aux;
-    aux = l2;
-    while(l.prim){  //posicao 0
-        l2 = aux;
-    //printf("entrei no 1 while\n");
-
-        while(l2.prim){
-            //printf("entrei no 2 while\n");
-            
-            if(l.prim->info.numero == l2.prim->info.numero){
-                //printf("\ncomparando [%d] com [%d]\n", l.prim->info.numero, l2.prim->info.numero);
+            if(aux->info.numero == chave){
+                if(ant == aux){
+                    l->atual = NULL;
+                }else{
+                    ant->prox = aux->prox;
+                    if(aux == l->atual){
+                        l->atual = aux->prox;
+                    }
+                }
+                free(aux);
                 return 1;
             }
 
-            //printf("\n [%d] e  [%d] nao sao iguais\n", l.prim->info.numero, l2.prim->info.numero);
+        }while(aux != l->atual);
+    }   
 
-            l2.prim = l2.prim->prox;
-        }
-        
-        l.prim = l.prim->prox;
-    }
-
-    return 0;
-
+    return 0; 
 }
 
 
+void contaTempo(tipoLista *lista, int tempo){
+
+    
+    int cont = 0;
+    int vezes = 0;
+    
+    if(lista->atual){
+
+        //percorrer com um auxiliar e retirar com o ponteiro da lista
+        do{
+            vezes++;
+            //printf("meu tempo: %d\n\n", cont );
+            //printf("valor do meu elemento %d\n", lista->atual->info.numero );
+            lista->atual->info.numero = lista->atual->info.numero - tempo;
+            //printf("valor do meu elemento pos subtracao %d\n", lista->atual->info.numero );
+
+
+
+
+            if(lista->atual->info.numero > 0){
+
+
+
+                cont = cont + tempo;
+                if(lista->atual == NULL){
+                    lista->atual = NULL;
+                }else{
+                    lista->atual = lista->atual->prox;
+                }
+
+                
+            }else{ 
+
+                //printf("%d", lista->atual->info.numero );
+                //printf(" + %d\n", tempo);
+                lista->atual->info.numero = lista->atual->info.numero + tempo;
+
+
+                //printf("%d +", cont); 
+                //printf(" %d\n", lista->atual->info.numero);
+                cont = cont + lista->atual->info.numero; //meu tempo  
+ 
+
+                printf("%d us: %s finalizou\n", cont, lista->atual->info.nome);
+                removerLista(lista, lista->atual->info.numero);
+                if(lista->atual != NULL){
+                    lista->atual = lista->atual->prox;
+                }
+                
+            }
+
+
+
+            
+            
+
+
+        }while(lista->atual != NULL);
+
+        //printf("eu saí do while");
+    }   
+
+}
 
 int main(){
 
     
     tipoLista *lista;
-    tipoLista *lista2;
-    tipoAgenda a;
+    tipoDado a;
+    
     lista = criarLista();
-    lista2 = criarLista();
+    int tempo;
+    int quantidade;
 
+    scanf("%d", &tempo);
+    scanf("%d", &quantidade);
 
-    scanf("%d", &a.numero);
-    while(a.numero != 0){
+    if(tempo > 0 && quantidade > 0){
+        for (int i = 0; i < quantidade; i++){
+            
+            scanf("%s", a.nome);
+            scanf("%d", &a.numero);
+            if(a.numero <1){
+                while(a.numero < 1 ){
+                inserirLista(lista, a);   
+                }
+            }else{
+                inserirLista(lista, a);   
+            }
+            
+                
+            
+        }
 
-        inserirFinalLista(lista, a);
-        scanf("%d", &a.numero);
-    }
-
-
-    scanf("%d", &a.numero);
-    while(a.numero != 0){
-
-        inserirFinalLista(lista2, a);
-        scanf("%d", &a.numero);
-    }          
-
-    //mostrarLista(lista);
-    //printf("\n");
-    //mostrarLista(lista2);
-    //printf("\n");
-
-    if( comum(*lista, *lista2) == 0){
-        printf("NAO");
-    }else{
-        printf("SIM");
-    }
         
-    
-    
+        contaTempo(lista, tempo);
 
 
+    }
 
-
-
-    
-    
 
 
 
