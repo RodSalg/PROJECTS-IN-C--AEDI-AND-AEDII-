@@ -2,14 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-//structs
-
 typedef struct no{
     float valor;
     struct no *proximo;
 }No;
 
-//funcoes da pilha
 
 No* push(No *pilha, float num){
     No *novo = malloc(sizeof(No));
@@ -35,8 +32,6 @@ No* pop(No **pilha){
         printf("*");
     return remover;
 }
-
-//funcoes para funcao
 
 float operacao(float a, float b, char x){ //identifica as operacoes
     switch(x){
@@ -94,7 +89,7 @@ int main(){
     for(int i = 0; i < tam; i++){
         
         scanf("%[^'.']%*c", expressao);
-        printf("%.2f\n", resolver_expressao(expressao));
+        printf("\n%.2f\n", resolver_expressao(expressao));
     }
     
 }
