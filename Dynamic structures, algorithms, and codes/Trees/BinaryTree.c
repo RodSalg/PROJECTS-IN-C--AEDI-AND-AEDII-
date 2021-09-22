@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 // ======================================= Binary Tree ========================================
-// =================================== by Rodrigo Salgado======================================
+// =================================== by Rodrigo Salgado ======================================
 // ============================================================================================
 
 typedef struct arv Arv;
@@ -38,7 +38,40 @@ Arv* cria(char c, Arv* sae, Arv* sad)
 
 }
 
+void imprime(Arv* a)
+{
+    if (!vazia(a)){
 
+    printf("%c ", a->info); /* mostra raiz */
+    imprime(a->esq); /* mostra sae */
+    imprime(a->dir); /* mostra sad */
+
+    }
+}
+
+Arv* libera(Arv* a){
+
+    if (!vazia(a)){
+
+        libera(a->esq); /* libera sae */
+        libera(a->dir); /* libera sad */
+
+        free(a); /* libera raiz */
+
+    }
+    return NULL;
+}
+
+
+int busca(Arv *a, char c){
+    if (vazia(a))
+        return 0; /* não encontrou */
+    else
+        return a->info == c ||
+            busca(a->esq, c) ||
+            busca(a->dir, c);
+
+}
 
 
 int main(){
