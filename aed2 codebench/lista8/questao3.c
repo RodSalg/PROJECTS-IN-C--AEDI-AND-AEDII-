@@ -85,9 +85,11 @@ void treePrint(Node *root){
     //sempre verificar se é vazia ou nao
     if(root){
 
-        printf("[%d] ", root->item.num);
+        
         treePrint(root->left);
+        printf("%d\n", root->item.num);
         treePrint(root->right);
+       
         
     }
 
@@ -98,9 +100,25 @@ void treeFree(Node *root){
     //sempre verificar se é vazia ou nao
     if(root){
         
+        
         treeFree(root->left);
         treeFree(root->right);
         free(root);
+        //printf(" estou eliminando o [%d]\n ", root->item.num);
+    }
+
+}
+
+
+void treeFreePoda(Node *root, int code){
+
+    //sempre verificar se é vazia ou nao
+    if(root->item.num != code){
+        
+        treeFree(root->left);
+        treeFree(root->right);
+        free(root);
+        //printf(" estou eliminando o [%d]\n ", root->item.num);
     }
 
 }
@@ -138,39 +156,34 @@ Node *treeMin(Node *root){
 }
 
 
-Node *treeRemove(Node *root, int cod){
+Node *Poda(Node *root, int cod){
 
      if(root){
 
          if(cod > root->item.num){
-             root->right = treeRemove(root->right, cod);
+             root->right = Poda(root->right, cod);
          }else if(cod <  root->item.num){
-             root->left = treeRemove(root->left, cod);
+             root->left = Poda(root->left, cod);
          }else{
              /// é igual encontrei o elemento que quero remover
 
-             if(root->left == NULL && root->right == NULL){
+            if(root->left == NULL && root->right == NULL){
 
-                 free(root);
-                 return NULL;
+                //free(root);
+                //return NULL;
+                return root;
 
-             }else if(root->left == NULL && root->right != NULL){
-                 Node *aux = root->right; //um auxiliar que salva o elemento que vai ser retornado fazendo uma ponte
-                 free(root);
-
-                 return aux;
-             }else if(root->left != NULL && root->right ==  NULL){
+            }else if(root->right != NULL){
                  
-                Node *aux = root->left;
-                free(root);
-                return aux;
-            }else{
-                Node *aux =  treeMin(root->right);
-                Item itemAux = aux->item;
-                root = treeRemove(root, itemAux.num);
-                root->item = itemAux;
-                
-            }   
+                 //Node *aux = root->right; //um auxiliar que salva o elemento que vai ser retornado fazendo uma ponte
+                 //free(root);
+
+                 //return aux;
+					treeFreePoda(root->right, cod);
+                 root->right = NULL;
+                 return root;
+
+            }  
         }
         return root;
     }
@@ -179,20 +192,23 @@ Node *treeRemove(Node *root, int cod){
 
 
 
+
 int main(){
 
     Node *root = treeinitialize(); //raíz é nula;
 
-    root = treeInsert(root, itemCreate(10)); 
-    root = treeInsert(root, itemCreate(15));
-    root = treeInsert(root, itemCreate(20));
-    root = treeInsert(root, itemCreate(12));
-    root = treeInsert(root, itemCreate(5));
+    int numero;
+    scanf("%d", &numero);
+    while(numero != 0){
 
-    printf(" >> antes de remover \n");
-    treePrint(root);
-    root = treeRemove(root, 10);
-    printf("\n >>depois de remover \n");
+        root = treeInsert(root, itemCreate(numero)); 
+        scanf("%d", &numero);
+
+    }
+
+    scanf("%d", &numero);
+    Poda(root,numero);
+
     treePrint(root);
 
 

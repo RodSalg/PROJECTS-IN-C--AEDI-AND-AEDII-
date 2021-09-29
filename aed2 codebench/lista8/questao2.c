@@ -85,9 +85,11 @@ void treePrint(Node *root){
     //sempre verificar se é vazia ou nao
     if(root){
 
-        printf("[%d] ", root->item.num);
+        
         treePrint(root->left);
+        printf("%d\n", root->item.num);
         treePrint(root->right);
+       
         
     }
 
@@ -183,16 +185,15 @@ int main(){
 
     Node *root = treeinitialize(); //raíz é nula;
 
-    root = treeInsert(root, itemCreate(10)); 
-    root = treeInsert(root, itemCreate(15));
-    root = treeInsert(root, itemCreate(20));
-    root = treeInsert(root, itemCreate(12));
-    root = treeInsert(root, itemCreate(5));
+    int numero;
+    scanf("%d", &numero);
+    while(numero != 0){
 
-    printf(" >> antes de remover \n");
-    treePrint(root);
-    root = treeRemove(root, 10);
-    printf("\n >>depois de remover \n");
+        root = treeInsert(root, itemCreate(numero)); 
+        scanf("%d", &numero);
+
+    }
+
     treePrint(root);
 
 

@@ -85,9 +85,11 @@ void treePrint(Node *root){
     //sempre verificar se é vazia ou nao
     if(root){
 
-        printf("[%d] ", root->item.num);
+        
         treePrint(root->left);
+        printf("%d\n", root->item.num);
         treePrint(root->right);
+       
         
     }
 
@@ -179,22 +181,65 @@ Node *treeRemove(Node *root, int cod){
 
 
 
+Node *enxerta(Node *root, int cod, Node *SubRoot){
+
+     if(root){
+
+         if(cod > root->item.num){
+             root->right = enxerta(root->right, cod, SubRoot);
+         }else if(cod <  root->item.num){
+             root->left = enxerta(root->left, cod, SubRoot);
+         }else{
+             /// é igual encontrei o elemento que quero remover
+
+             if(root->left == NULL && root->right == NULL){
+
+                if(SubRoot->item.num > root->item.num){
+                    root->right = SubRoot;
+                }else if(SubRoot->item.num < root->item.num){
+                    root->left = SubRoot;
+                }
+                
+
+             }  
+        }
+        return root;
+    }
+
+    return root;
+      
+}
+
+
+
 int main(){
 
     Node *root = treeinitialize(); //raíz é nula;
+    Node *rootAux = treeinitialize(); //raíz é nula;
 
-    root = treeInsert(root, itemCreate(10)); 
-    root = treeInsert(root, itemCreate(15));
-    root = treeInsert(root, itemCreate(20));
-    root = treeInsert(root, itemCreate(12));
-    root = treeInsert(root, itemCreate(5));
+    
+    int numero;
+    scanf("%d", &numero);
+    while(numero != 0){
 
-    printf(" >> antes de remover \n");
+        root = treeInsert(root, itemCreate(numero)); 
+        scanf("%d", &numero);
+
+    }   
+
+     
+    scanf("%d", &numero);
+    while(numero != 0){
+
+        rootAux = treeInsert(rootAux, itemCreate(numero)); 
+        scanf("%d", &numero);
+
+    }
+
+    scanf("%d", &numero);
+    enxerta(root, numero ,rootAux);
+
     treePrint(root);
-    root = treeRemove(root, 10);
-    printf("\n >>depois de remover \n");
-    treePrint(root);
-
 
     treeFree(root);
 
