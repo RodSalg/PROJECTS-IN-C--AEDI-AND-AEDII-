@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -294,8 +293,8 @@ int busca_diferenca(TAVL *root)
 TAVL *balance(TAVL *root)
 {
 
-
-    if(root == NULL){
+    if (root == NULL)
+    {
         return root;
     }
 
@@ -355,7 +354,6 @@ TAVL *balance(TAVL *root)
     //printf("\ncheguei ao fim\n");
 }
 
-
 TAVL *removeAVL(TAVL *root, int chave)
 {
 
@@ -412,7 +410,7 @@ int main()
     imprimirArvore(root, 2);
     printf("%d %d\n", altura(root) - 1, root->chave);
 
-    for (i = 0; i < cont - 1; i++)
+    for (i = 0; i < cont; i++)
     {
         TAVL *aux = NULL;
         if ((busca(root, v[i], aux)) != NULL)
