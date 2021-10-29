@@ -61,12 +61,8 @@ void inserirFinalLista(tipoLista *l, tipoAgenda a){
         }
         aux->prox = no;
 
-    }
-
-    
-
+    }   
 }
-
 
 
 void mostrarLista(tipoLista *l){//com ponteiro{
@@ -101,29 +97,6 @@ void media(tipoLista l){
     printf("%.2f", media);
 }
 
-int lestring(char s[], int max)
-{
-    int i = 0;
-    char letra;
-
-    for (i = 0; i < (max - 1); i++) {
-   letra = fgetc(stdin);
-
- 
-   if ((letra == '\n') && (i == 0)) {
-       i = i - 1;
-       continue;
-   }
-
-
-   if (letra == '\n')
-       break;
-   s[i] = letra;
-    }
-    s[i] = 0;
-
-    return (i);
-}
 
 
 
