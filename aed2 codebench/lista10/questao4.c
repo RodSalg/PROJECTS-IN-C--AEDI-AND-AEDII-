@@ -40,6 +40,7 @@ Node *treeInsert(Node *root, Item x)
 { // fazendo de uma forma mais abstrata
 
     // quais sao os casos?
+    // printf("eu entro na funcao mas nao adiciono\n");
 
     // 1° caso: não há elemento na raíz
     if (root == NULL)
@@ -51,21 +52,22 @@ Node *treeInsert(Node *root, Item x)
         aux->item = x;
         aux->left = treeinitialize();
         aux->right = treeinitialize();
+        // printf("vou inserir na novidades\n");
 
         return aux; // retorno o no que eu adicionei;
     }
-    else
+    else if (root != NULL)
     { // caso o nó nao seja nula ( ARVORE BINARIA DE BUSCA )
 
         if (x.num > root->item.num)
         { // se o numero for maior vai entrar na direita
-
+            // printf("vou inserir na direita\n");
             root->right = treeInsert(root->right, x);
             // printf("fui para a direita [%d]\n", x.num);
         }
         else if (x.num < root->item.num)
         { // caso o numero seja menor ele vai entrar na esquerda
-
+            // printf("vou inserir na esquerda\n");
             root->left = treeInsert(root->left, x);
             // printf("fui para a esquerda [%d]\n", x.num);
         }
@@ -82,8 +84,9 @@ void treePrint(Node *root)
     // sempre verificar se é vazia ou nao
     if (root)
     {
-        printf("[%d] %s\n", root->item.num, root->item.Nome);
+
         treePrint(root->left);
+        printf("%d %s ", root->item.num, root->item.Nome);
         treePrint(root->right);
     }
 }
@@ -128,12 +131,86 @@ Node *treeSearch(Node *root, int cod)
     return NULL;
 }
 
+//--------------------------- início funções tabela hash -----------------------
+
+// inicializa a tabela com uma lista vazia em cada posição do vetor
+
+Node *criarLista()
+{
+    Node *root = treeinitialize();
+
+    return root;
+}
+
+void inicializar(Node *tabela[], int M)
+{
+    int i;
+    for (i = 0; i < M; i++)
+        tabela[i] = criarLista();
+}
+
+// função de espalhamento
+int funcaoEspalhamento(int mat, int M)
+{
+    return mat % M;
+}
+
+// cria uma pessoa e a insere na tabela
+void inserTabela(Node *tabela[], int M, Node p)
+{
+
+    int indice = funcaoEspalhamento(p.item.num, M);
+    tabela[indice] = treeInsert(tabela[indice], itemCreate(p.item.num, p.item.Nome));
+    // mandar inserir, (root, na posicao)
+}
+
+// busca uma pessoa. Seu retorno é um endereço ou NULL
+Item *buscarPessoaTabela(Node *tabela[], int mat, int M)
+{
+    int indice = funcaoEspalhamento(mat, M);
+    Node *pessoa;
+    pessoa = treeSearch(tabela[indice], mat);
+
+    if (pessoa)
+    {
+        printf("%d %d %s\n", indice, pessoa->item.num, pessoa->item.Nome);
+    }
+    else
+    {
+        printf("%d not found\n", mat);
+    }
+}
+
+// imprimir tabela
+
+void imprimirTabela(Node *tabela[], int M)
+{
+    int i;
+    for (i = 0; i < M; i++)
+    {
+        if (tabela[i] == NULL)
+        {
+            printf("%d null \n", i);
+        }
+        else
+        {
+            printf("%d ", i);
+            treePrint(tabela[i]);
+            printf("\n");
+        }
+    }
+}
+
 int main()
 {
 
-    Node *root = treeinitialize(); // raíz é nula;
+    Node *tabela[4];
+    Node aux;
+    int tam;
+    scanf("%d", &tam);
+    inicializar(tabela, tam);
 
-    root = treeInsert(root, itemCreate(10, "rod"));
+    /*root = treeInsert(root, itemCreate(10, "rod"));
     root = treeInsert(root, itemCreate(15, "rod"));
     root = treeInsert(root, itemCreate(20, "rod"));
     root = treeInsert(root, itemCreate(12, "rod"));
@@ -142,30 +219,37 @@ int main()
     printf(" >> antes de remover \n");
     treePrint(root);
     root = treeRemove(root, 10);
-    printf("\n >>depois de remover \n");
+    printf("\n >>depois de remover \n");*/
 
-    /*int numero;
-    char nome[50];
-
-    scanf("%d", &numero);
-    if (numero != 0)
+    scanf("%d", &aux.item.num);
+    if (aux.item.num != 0)
     {
-        scanf("%s", nome);
+        scanf("%s", &aux.item.Nome);
+        // printf("buguei1\n");
+
+        // printf("buguei\n");
     }
-    while (numero != 0)
+
+    while (aux.item.num != 0)
     {
-        root = treeInsert(root, itemCreate(numero, nome));
-        scanf("%d", &numero);
-        if(numero != 0)
+        inserTabela(tabela, tam, aux);
+        scanf("%d", &aux.item.num);
+        if (aux.item.num != 0)
         {
-            scanf("%s", nome);
+            scanf("%s", &aux.item.Nome);
         }
+    }
 
-    }*/
-
-    treePrint(root);
-
-    treeFree(root);
+    // printf("%d %s", tabela[1]->item.num, tabela[1]->item.Nome);
+    imprimirTabela(tabela, tam);
+    printf("- - -\n");
+    int search;
+    scanf("%d", &search);
+    while (search != 0)
+    {
+        buscarPessoaTabela(tabela, search, tam);
+        scanf("%d", &search);
+    }
 
     return 0;
 }

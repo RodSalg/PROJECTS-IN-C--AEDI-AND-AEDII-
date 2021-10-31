@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//a tabela funciona agora vou aperfeiçoar para utilizar na q1
+// a tabela funciona agora vou aperfeiçoar para utilizar na q1
 //
 
-//constante que representa o tamanho da tabela
+// constante que representa o tamanho da tabela
 //#define M 99
 typedef struct
 {
@@ -13,25 +13,25 @@ typedef struct
 
 } Pessoa;
 
-//inicializa a tabela com esse valor porque  saberei que posição está preenchida ou nao
+// inicializa a tabela com esse valor porque  saberei que posição está preenchida ou nao
 void inicializarTabela(Pessoa tabelaHash[], int M)
 {
     int i;
     for (i = 0; i < M; i++)
     {
-        tabelaHash[i].matricula = -1; //marcamos através da matrícula
+        tabelaHash[i].matricula = -1; // marcamos através da matrícula
     }
 }
 
-//funcao de espalhamento
-//vai receber a matrícula e gerar um código para salvar o elemento pessoa
+// funcao de espalhamento
+// vai receber a matrícula e gerar um código para salvar o elemento pessoa
 
 int gerarCodigoHash(int chave, int M)
 {
-    return chave % M; //recebe a chave e retorna o resto da divisao da chave por M;
+    return chave % M; // recebe a chave e retorna o resto da divisao da chave por M;
 }
 
-//inserir uma pessoa na tabela;
+// inserir uma pessoa na tabela;
 void inserir(Pessoa tabelaHash[], int mat, int M)
 {
     Pessoa pes;
@@ -58,7 +58,7 @@ Pessoa *buscar(Pessoa tabelaHash[], int chave, int M)
         }
         else
         {
-            //printf("loop >>%d\n\n\n", indice);
+            // printf("loop >>%d\n\n\n", indice);
             indice = gerarCodigoHash(indice + 1, M);
         }
         cont++;
@@ -93,7 +93,7 @@ int main()
     int tam;
     scanf("%d", &tam);
     int num;
-    Pessoa tabelaHx xash[tam];
+    Pessoa tabelaHash[tam];
     inicializarTabela(tabelaHash, tam);
     scanf("%d", &num);
     while (num != 0)
@@ -101,7 +101,7 @@ int main()
         inserir(tabelaHash, num, tam);
         scanf("%d", &num);
     }
-    //imprimir(tabelaHash, tam);
+    // imprimir(tabelaHash, tam);
 
     scanf("%d", &num);
     while (num != 0)
