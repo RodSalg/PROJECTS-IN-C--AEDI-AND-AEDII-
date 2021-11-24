@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ESTRUTURAS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 /*
     estrutura definida;
@@ -11,14 +10,15 @@
     a estrutura possui o nome do país juntamente do numero de medalhas de ouro prata e bronze
 
 */
-typedef struct quadro{
+typedef struct quadro
+{
 
     char pais[15];
     int Mouro;
     int Mprata;
     int Mbronze;
 
-}TQuadro;
+} TQuadro;
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FUNCOES DE MEDALHAS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 TQuadro *inicializaQuadro(int tam)
@@ -41,88 +41,113 @@ TQuadro *inicializaQuadro(int tam)
 void MostraQuadro(TQuadro *quadro, int tam)
 {
 
-    for (int i = 0; i < tam; i++){
-        printf("pais: %s\n", quadro[i].pais);
-        printf("ouro: %d\n", quadro[i].Mouro);
-        printf("prata: %d\n", quadro[i].Mprata);
-        printf("bronze: %d\n\n", quadro[i].Mbronze);
-        
+    for (int i = 0; i < tam; i++)
+    {
+        printf("%s ", quadro[i].pais);
+        printf("%d ", quadro[i].Mouro);
+        printf("%d ", quadro[i].Mprata);
+        printf("%d\n", quadro[i].Mbronze);
+        /* printf("pais: %s\n", quadro[i].pais);
+         printf("ouro: %d\n", quadro[i].Mouro);
+         printf("prata: %d\n", quadro[i].Mprata);
+         printf("bronze: %d\n\n", quadro[i].Mbronze);*/
     }
 }
 
 TQuadro *PreencheQuadro(TQuadro *quadro, int tam)
 {
-    for(int i = 0; i < tam; i++)
+    for (int i = 0; i < tam; i++)
     {
-        printf("pais: ", quadro[i].pais);
+        // printf("pais: ", quadro[i].pais);
         scanf("%s", &quadro[i].pais);
-        printf("ouro: ", quadro[i].Mouro);
+        // printf("ouro: ", quadro[i].Mouro);
         scanf("%d", &quadro[i].Mouro);
-        printf("prata: ", quadro[i].Mprata);
+        // printf("prata: ", quadro[i].Mprata);
         scanf("%d", &quadro[i].Mprata);
-        printf("bronze: ", quadro[i].Mbronze);
+        // printf("bronze: ", quadro[i].Mbronze);
         scanf("%d", &quadro[i].Mbronze);
     }
-
 
     return quadro;
 }
 
 TQuadro *OrdenandoQuadro(TQuadro *quadro, int tam)
 {
-    int i, j, min, aux;
+    int i;
+    int j;
+    int min;
+    TQuadro aux;
     for (i = 0; i < (tam - 1); i++)
     {
         min = i;
+
         for (j = (i + 1); j < tam; j++)
         {
-            if (quadro[j].Mouro < quadro[min].Mouro)
-                min = j;
+            if (quadro[j].Mouro == quadro[min].Mouro)
+            {
+                if (quadro[j].Mprata == quadro[min].Mprata)
+                {
+                    if (quadro[j].Mbronze == quadro[min].Mbronze)
+                    {
+                        // ordenar pelo nome
+                        // printf("cheguei na ordenação por nome\n");
+                        int compara;
+                        compara = strcmp(quadro[j].pais, quadro[min].pais);
+                        if(compara <= 0)
+                        {
+                            //printf("\ncomparando por nome\n");
+                            min = j;
+                        }
+                    }
+                    else
+                    {
+                        if (quadro[j].Mbronze > quadro[min].Mbronze)
+                        {
+                            min = j;
+                            // printf("organizando por bronze\n");
+                        }
+                    }
+                }
+                else
+                {
+                    if (quadro[j].Mprata > quadro[min].Mprata)
+                    {
+                        min = j;
+                        // printf("organizando por prata\n");
+                    }
+                }
+            }
+            else
+            {
+                if (quadro[j].Mouro > quadro[min].Mouro)
+                {
+                    min = j;
+                    // printf("organizando por ouro\n");
+                }
+            }
         }
         if (i != min)
         {
-            aux = num[i];
-            num[i] = num[min];
-            num[min] = aux;
+            aux = quadro[i];
+            quadro[i] = quadro[min];
+            quadro[min] = aux;
         }
     }
-    for (int i = 0; i < 5; i++)
-    {
-        printf(" %d |", num[i]);
-    }
+
+    MostraQuadro(quadro, tam);
 }
 
-TQuadro *selectionSort(int num[], int tam)
+int main()
 {
-    int i, j, min, aux;
-    for (i = 0; i < (tam - 1); i++)
-    {
-        min = i;
-        for (j = (i + 1); j < tam; j++)
-        {
-            if (num[j] < num[min])
-                min = j;
-        }
-        if (i != min)
-        {
-            aux = num[i];
-            num[i] = num[min];
-            num[min] = aux;
-        }
-    }
-    for (int i = 0; i < 5; i++)
-    {
-        printf(" %d |", num[i]);
-    }
-}
 
-int main(){
-
-    int tam = 8;
+    int tam;
+    scanf("%d", &tam);
     TQuadro *quadro;
     quadro = inicializaQuadro(tam);
-    MostraQuadro(quadro, tam);
+    // MostraQuadro(quadro, tam);
     quadro = PreencheQuadro(quadro, tam);
-    printf("\n\n");
-    MostraQuadro(quadro, tam);
+    // printf("\n\n");
+    // MostraQuadro(quadro, tam);
+    // printf("\n\n");
+    OrdenandoQuadro(quadro, tam);
 }
