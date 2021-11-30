@@ -173,10 +173,10 @@ void travessia(Pagina *page) // infixada forma de impressao
 {
     if (page != NULL)
     {
-        imprime(page->esquerda);
+        travessia(page->esquerda);
         printf("%d ", page->chave);
-        imprime(page->direita);
-        imprime(page->prox);
+        travessia(page->direita);
+        travessia(page->prox);
     }
 }
 
@@ -184,10 +184,10 @@ void liberaArv(Pagina *page)
 {
     if (page != NULL)
     {
-        imprime(page->esquerda);
+        liberaArv(page->esquerda);
         free(page);
-        imprime(page->direita);
-        imprime(page->prox);
+        liberaArv(page->direita);
+        liberaArv(page->prox);
     }
 }
 
@@ -205,6 +205,6 @@ int main(void)
         MainPage = inserirArvoreB(MainPage, ordem, chave);
         scanf("%d", &chave);
     }
-    imprime(MainPage);
+    travessia(MainPage);
     liberaArv(MainPage);
 }
